@@ -51,6 +51,45 @@ Ensure .gitignore contains:
 node_modules/
 *.log
 
+
+Design and Architecture : 
+sequenceDiagram
+participant U as User (Client)
+participant A as API Server (Node.js / Express)
+participant DB as PostgreSQL
+
+
+Note over U,A: 1️⃣ Register
+U->>A: POST /api/auth/register (name, email, password)
+A->>DB: Hash password & save user
+A-->>U: 201 Created
+
+
+Note over U,A: 2️⃣ Login
+U->>A: POST /api/auth/login (email, password)
+A->>DB: Validate user & password
+A-->>U: accessToken + refreshToken
+
+
+Note over U,A: 3️⃣ Access Protected APIs
+U->>A: GET /protected (Authorization: Bearer accessToken)
+A->>A: Verify JWT via middleware
+A-->>U: 200 OK (Authorized)
+
+
+Note over U,A: 4️⃣ Refresh Token
+U->>A: POST /refresh (refreshToken)
+A->>DB: Validate refresh token
+A-->>U: New accessToken
+
+
+Note over U,A: 5️⃣ Logout
+U->>A: POST /logout (refreshToken)
+A->>DB: Remove refresh token
+A-->>U: Logged out
+
+
+
 📁 Project Structure
 backend/
  ├── config/db.js
