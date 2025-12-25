@@ -1,5 +1,10 @@
 Secure User Management API (Node.js + PostgreSQL)
 
+![Node.js](https://img.shields.io/badge/Node.js-v18-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v14-blue)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+
 Production-ready authentication backend implementing:
 
 JWT Access Tokens
